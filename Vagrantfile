@@ -34,6 +34,7 @@ Vagrant.configure("2") do |config|
         vb.cpus = 1
       end
   end
+
   config.vm.define "datacenter" do |dtc|
     dtc.vm.box = "geerlingguy/debian9"
     dtc.vm.network "private_network", ip: "172.17.177.42"
@@ -72,6 +73,20 @@ Vagrant.configure("2") do |config|
     end
   end
   
+  config.vm.define "puppet" do |pup|
+    pup.vm.network "private_network", ip: "172.17.177.45"
+    pup.vm.box = "geerlingguy/debian9"
+    pup.vm.provision "shell", path: "update.sh"
+    pup.vm.provision "puppet" do |puppet|
+      puppet.manifests_path = "manifests"
+      puppet.module_path = "modules"
+      puppet.manifest_file = "site.pp"
+    end
+    pup.vm.hostname = "puppet"
+    pup.vm.provider "virtualbox" do |v|
+      v.name = "puppet"
+    end
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
