@@ -59,7 +59,8 @@ file { '/srv/www':
   mode => '2750',
 }
 
-
+# Para instalar o modulo use comando no update.sh  
+# vagrant puppet module install puppet-archive 
 #archive { '/tmp/express.zip':
 #  source => 'https://github.com/rogerramossilva/devops/raw/master/express.zip',
 #  extract => true,
@@ -74,14 +75,15 @@ exec { "wget-express.zip":
   command => "/usr/bin/wget --no-check-certificate https://github.com/rogerramossilva/devops/raw/master/express.zip",
   creates => "/tmp/express.zip",
   require => Package["wget"],
-#  refreshonly => true,
+  refreshonly => true,
 }
 
 exec { "unzip":
   cwd => "/srv/www",
   command => "/usr/bin/unzip /tmp/express.zip -d /srv/www",
-  require => Package["zip"],
-#  refreshonly => true,
+  require => [ Package["zip", "wget"], Exec["wget-express.zip"] ] ,
+#  require => Package["zip"],
+  refreshonly => true,
 }
 
 service { 'apache2':

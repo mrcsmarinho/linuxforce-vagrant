@@ -63,16 +63,24 @@ Vagrant.configure("2") do |config|
   #  nintra.vm.box = "novointranet"
   #end
   
-  config.vm.define "ansible" do |ans|
-    ans.vm.network "private_network", ip: "172.17.177.41"
-    ans.vm.box = "ansible/tower"
-    ans.vm.hostname = "ansible"
-    ans.vm.provision "shell", inline: "yum update -y"
+ # config.vm.define "ansible" do |ans|
+ #   ans.vm.network "private_network", ip: "172.17.177.46"
+ #   ans.vm.box = "ansible/tower"
+ #   ans.vm.hostname = "ansible"
+ #   ans.vm.provision "shell", inline: "yum update -y"
+ #   config.vm.provider "virtualbox" do |v|
+ #     v.name = "ansible"
+ #   end
+ # end
+  config.vm.define "controle" do |ctl|
+    ctl.vm.network "private_network", ip: "172.17.177.41"
+    ctl.vm.box = "ansible/tower"
+    ctl.vm.hostname = "controle"
+    ctl.vm.provision "shell", inline: "yum update -y"
     config.vm.provider "virtualbox" do |v|
-      v.name = "ansible"
+      v.name = "controle"
     end
   end
-  
   config.vm.define "puppet" do |pup|
     pup.vm.network "private_network", ip: "172.17.177.45"
     pup.vm.box = "geerlingguy/debian9"
