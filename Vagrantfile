@@ -72,6 +72,7 @@ Vagrant.configure("2") do |config|
  #     v.name = "ansible"
  #   end
  # end
+
   config.vm.define "controle" do |ctl|
     ctl.vm.network "private_network", ip: "172.17.177.41"
     ctl.vm.box = "ansible/tower"
@@ -79,7 +80,8 @@ Vagrant.configure("2") do |config|
     ctl.vm.provision "shell", inline: "yum update -y"
     config.vm.provider "virtualbox" do |v|
       v.name = "controle"
-    end
+#      v.memory = "2048"
+      end
   end
   config.vm.define "puppet" do |pup|
     pup.vm.network "private_network", ip: "172.17.177.45"
