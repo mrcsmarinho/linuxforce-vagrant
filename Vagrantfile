@@ -98,6 +98,39 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "master" do |master|
+    master.vm.box = "geerlingguy/centos7"
+    master.vm.network "public_network", ip: "192.168.0.150"
+    master.vm.hostname = "master"
+master.vm.provider "virtualbox" do |v|
+  v.name = "master"
+v.cpus = 2
+v.memory = 2048
+ end
+end
+
+config.vm.define "node1" do |node1|
+        node1.vm.box = "geerlingguy/centos7"
+        node1.vm.network "public_network", ip: "192.168.0.151"
+        node1.vm.hostname = "node1"
+  node1.vm.provider "virtualbox" do |v|
+  v.name = "node1"
+v.cpus = 2
+v.memory = 2024
+ end
+end	    
+config.vm.define "node2" do |node2|
+        node2.vm.box = "geerlingguy/centos7"
+        node2.vm.network "public_network", ip: "192.168.0.152"
+        node2.vm.hostname = "node2"  
+  node2.vm.provider "virtualbox" do |v|
+  v.name = "node2"
+v.cpus = 2
+v.memory = 2024
+ end
+end
+
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
